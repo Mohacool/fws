@@ -102,6 +102,13 @@
         /* Fix odd line showing at the bottom */
         transform: translateY(1px);
     }
+    .audioplayer_hide{
+        transform:translateY(110%);
+    }
+    .audioplayer_show{
+        transform: translateY(1px);
+
+    }
     .title{
         font-size:26px;
 
@@ -212,25 +219,57 @@
     }
 
 
+    /* Custom Audioplayer */
     .skip_forward, .skip_back{
         position:absolute;
-        opacity:0.3;
+        opacity:0.2;
         transition: all .3s ease-out;
     }
     .skip_forward:hover, .skip_back:hover{
-        opacity:0.7;
+        opacity:0.4;
         cursor:pointer;
     }
 
     .skip_forward{
-        margin-right:90px;
+        margin-right:84px;
     }
     .skip_back{
         
         margin-left:84px;
     }
 
-    /* Audio Player */
+    /* X button */
+    .close {
+        position: absolute;
+        right: 23px;
+        /* top: 23px; */
+        width: 23px;
+        height: 23px;
+        opacity: 0.3;
+        transition: all .3s ease-out;
+
+    }
+    .close:hover {
+        opacity: 1;
+        cursor:pointer;
+    }
+    .close:before, .close:after {
+        position: absolute;
+        left: 15px;
+        content: ' ';
+        height: 24px;
+        width: 1.5px;
+        background-color: #333;
+        border-radius:5px;
+    }
+    .close:before {
+        transform: rotate(45deg);
+    }
+    .close:after {
+        transform: rotate(-45deg);
+    }
+
+    /* Audio Player Edits */
     .plyr__progress input{
         color:#2c94d0 !important;
     }
@@ -317,6 +356,8 @@
         </audio>
         <img class="skip_forward" height="30px" src="https://img.icons8.com/ios/100/000000/replay-10.png"/>
         <img class="skip_back" height="30px" src="https://img.icons8.com/ios/100/000000/forward-10.png"/>
+
+        <a class="close"></a>
     </div>
    
     <div class="container">
@@ -358,13 +399,14 @@
         });
     $(".en").slideUp(0);
 
+    // Remove all english blocks
     $('.en').addClass('fadeOut');
+
+    // Show the correct blocks on click
     $(".fr").click(function(){
+
         // Get the next english div 
         var en_part = $(this).next('.en');
-        // console.log(en_part);
-        
-
         if (en_part.css('display')=="none"){
             en_part.slideDown({start: function () {
                 $(this).removeClass('fadeOut');
@@ -394,6 +436,13 @@
     const player = new Plyr('#player', {
         controls:['play-large', 'play', 'progress', 'current-time', 'captions', 'settings', 'pip', 'airplay', 'fullscreen']
     });
+
+    // Audiobar show/hide
+    $(".close").click(function(){
+        $(".audio_player").removeClass('audioplayer_show');
+        $(".audio_player").addClass('audioplayer_hide');
+        
+    })
 
 
     
