@@ -1,0 +1,20 @@
+.sidebar{
+    background-color:aqua;
+    height:100vh;
+    width:20px;
+}
+
+
+.title{
+    font-family:  "Cursive";
+    color:rgb(39, 145, 207);
+}
+
+@font-face {
+    font-family: "Cursive";
+    src: url("/fonts/Retrow\ Mentho.ttf");
+}
+
+
+
+/*  */

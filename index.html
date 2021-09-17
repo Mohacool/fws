@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+
+    <!-- Plyr.io -->
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+
+
+
+</head>
+<style>
+    html, body{
+        background-color:#f9f9f7;
+    }
+    .navigation{
+        position: fixed;
+        top: -53px;
+        left: 0;
+        width: 100%;
+        z-index: 75;
+        transform: translateY(-2%);
+        /* visibility: hidden; */
+        will-change: transform;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 9px;
+        padding-right: 14px;
+        height: 53px;
+        align-items: center;
+        background: #fff;
+        color: #000;
+        fill: #000;
+        border-bottom: 1px solid rgba(0,0,0,.2);
+        transition: transform .3s ease-out 0s,visibility .3s ease-out 0s,background .5s;
+
+        padding-left: 12px;
+        padding-right: 20px;
+        height: 63px;
+        top: -63px;
+        transform: translateY(100%)
+    }
+    .navigation:before{
+        content: "";
+        background: #fff;
+        transition: opacity .5s;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    .audio_player{
+        position: fixed;
+        left: 0;
+        width: 100%;
+        z-index: 75;
+        /* visibility: hidden; */
+        will-change: transform;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 9px;
+        padding-right: 14px;
+        height: 53px;
+        align-items: center;
+        background: #fff;
+        color: #000;
+        fill: #000;
+
+        border-top: 2px solid rgba(0,0,0,.1);
+        transition: transform .3s ease-out 0s,visibility .3s ease-out 0s,background .5s;
+        height: 63px;
+        bottom:0;
+
+        margin:0;
+        padding:0;
+
+        justify-content:center;
+
+        /* Use this to hide/show */
+        /* transform:translateY(100%); */
+
+        /* Fix odd line showing at the bottom */
+        transform: translateY(1px);
+    }
+    .title{
+        font-size:26px;
+
+    }
+    .circle_logo{
+        height:45px;
+        width:45px;
+        border:1px solid black;
+        border-radius:100%;
+        min-width:45px;
+        min-height:45px;
+    }
+    .stories{
+        font-family: 'Urbanist', sans-serif;
+        font-size:20px;
+        font-weight:800;
+        transition: all .3s ease-out;
+        white-space:nowrap;
+    }
+    .menu_item{
+        font-family: 'Urbanist', sans-serif;
+        font-size:20px;
+
+    }
+    .stories:hover{
+        cursor:pointer;
+        color:#2791cf;
+    }
+    .menu_item:last-of-type{
+        padding-right:50px !important;
+    }
+    #story{
+        font-family: 'PT Serif', serif;
+        font-size:20px;
+        padding-bottom:100px !important;
+        
+    }
+    .booktitle{
+        font-family:  "Cursive";
+        font-size:80px;
+        padding-top:60px;
+    }
+    .container{
+        margin-top:60px;
+    }
+    .move-up{
+        transform:translateY(-2%);
+    }
+    .move-down{
+        transform:translateY(100%);
+    }
+    .navigation_booktitle{
+        font-size: 17px;
+        font-family: 'Urbanist', sans-serif;
+        color:rgb(20, 20, 20);
+        opacity:0;
+       
+
+    }
+    .progress-bar{
+        height: 2px;
+        background: #dbdbdb;
+        transition: background .5s,opacity .5s;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        /* display: none; */
+        opacity: 1;
+        width: 100%;
+        /* transform: translateY(2px); */
+    }
+    .progress-bar__progress {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 2px;
+        transition: background .5s;
+        background-color:black;
+    }
+    .en{
+        /* background-color:#ededea; */
+        /* display:block; */
+        width:100%;
+        padding-top: 20px;
+        padding-bottom:20px;
+        display:none;
+        font-style:italic;
+        color:rgb(0, 0, 0);
+        opacity:0.5;
+
+    }
+    .fr{
+        transition: opacity 300ms ease 0s;
+        
+    }
+    
+    .fr:hover{
+        cursor:pointer;
+    }
+    .fadeIn{
+        transition:opacity 0.5s ease-in-out;
+        opacity:0.5;
+    }
+    .fadeOut {
+        transition:opacity 0.5s ease-in-out;
+        opacity:0;
+    }
+
+
+    /* Audio Player */
+    .plyr__progress input{
+        color:#2c94d0 !important;
+    }
+    /* Hide Duration and Speed Settings */
+    .plyr__controls__item.plyr__menu, .plyr__controls .plyr__controls__item.plyr__time{
+        display:none !important;
+    }
+    .plyr__controls__item.plyr__progress__container{
+        position: absolute;
+        top: 0;
+        margin-top: -14px;
+        left: 0px;
+        padding-left: 0;
+        width: 100vw;
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+        padding-left: 0.5px !important;
+        padding-right: 0.5px !important;
+    }
+    .plyr__controls__item.plyr__control[data-plyr="play"]{
+        background:transparent !important;
+        color:#4a5464 !important;
+        margin:0 auto;
+    }
+    .plyr.plyr--full-ui{
+        width:100vw;
+    }
+    
+
+    
+    /* Non mobile */
+    @media (min-width: 768px){
+        #story{
+            padding: 0 100px;
+        }
+        .booktitle{
+            font-size:130px;
+        }
+        .container{
+            margin-top:120px;
+        }
+
+    } 
+
+    
+</style>
+
+<body>
+    <div class="navigation">
+        <div class="logo d-flex justify-content-center align-items-center">
+            <div class="circle_logo mr-3"></div>
+            <h1 class="title m-0 p-0 d-none d-md-flex">French With Stories</h1>
+            <h1 class="navigation_booktitle m-0"> Le Comte De Monte Cristo | Chapter 1</h1>
+        </div>
+        <div class="menu-desktop pr-3 align-items-center d-none d-md-flex">
+            <h1 class="menu_item pr-4 m-0">Youtube</h1>
+            <h1 class="menu_item pr-4 m-0">About</h1>
+            <h1 class="stories m-0 p-0"> All Stories</h1>
+        </div>
+        <div class="menu pr-3 d-flex align-items-center d-md-none">
+            <h1 class="stories m-0 p-0"> Menu</h1>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-bar__progress"></div>
+        </div>
+        
+    </div>
+    <!-- Simple -->
+    <div class="audio_player d-none">
+        <audio id="player-id" controls>
+            <source src="chapter1.mp3" type="audio/mp3" />
+          </audio>
+    </div>
+    <!-- Attempt -->
+    <div class="audio_player">
+        <audio id="player" controls>
+            <source src="chapter1.mp3" type="audio/mp3" />
+        </audio>
+        <div class="skip_container d-flex position-absolute">
+            <img src="https://img.icons8.com/ios-glyphs/30/000000/replay-10.png"/>
+            <img style="opacity:0;" src="https://img.icons8.com/ios-glyphs/30/000000/replay-10.png"/>
+            <img src="https://img.icons8.com/ios-glyphs/30/000000/forward-10.png"/>
+        </div>
+    </div>
+   
+    <div class="container">
+        <h1 class="booktitle text-center">Le Comte de <br>Monte Cristo</h1>
+        <div id="story" class="pt-5">
+            <div class="fr">Le 24 février 1815, en France, un grand bateau appelé « le Pharaon » entre dans le port de Marseille.<br><br></div><div class="en">On February 24, 1815, in France, a large boat  called "the Pharaoh" entered the port of Marseille.<br><br></div><div class="fr">Le bateau avance très lentement et avec une apparence vraiment triste. Alors, sur la plate-forme du port, certaines personnes curieuses se demandent si un accident est arrivé.<br><br></div><div class="en">The boat is moving very slowly and looking really sad. So, on the platform of the port, some curious people wonder  if an accident has happened.<br><br></div><div class="fr">Près du pilote, on peut voir un jeune homme, qui fait des gestes rapides, avec des yeux précis et intelligents. Il contrôle chaque mouvement du bateau et donne les ordres.<br><br></div><div class="en">Near the pilot, we can see a young man, who gestures quickly, with precise and intelligent eyes. He controls every movement of the boat and gives orders.<br><br></div><div class="fr">Sur la plate-forme du port, une atmosphère d’anxiété agite toutes les personnes, et spécialement un des spectateurs qui est trop impatient pour attendre l’entrée du bateau. C’est l’entrepreneur qui possède le bateau. Alors, il saute dans un petit bateau et donne l’ordre de rejoindre le Pharaon.<br><br></div><div class="en">On the harbor platform, an atmosphere of anxiety agitates all people, especially one of the spectators who is too impatient to wait for the boat to enter. The contractor owns the boat. So he jumps into a small boat and gives the order to join the Pharaoh.<br><br></div><div class="fr">En regardant cet homme arriver, le jeune marin sur le grand bateau quitte son poste pour aller le voir, le chapeau dans la main.<br><br></div><div class="en">Watching this man arrive, the young sailor  on the big boat leaves his post to go see him, hat in hand.<br><br></div><div class="fr">Le jeune marin a dix-neuf ans, grand, avec des beaux yeux noirs et des cheveux bruns. Il a l’air calme, c’est une caractéristique typique aux hommes habitués à combattre le danger depuis leur enfance.<br><br></div><div class="en">The young sailor is nineteen, tall, with beautiful black eyes and brown hair. He looks calm , this is a typical characteristic of men accustomed to fighting danger from childhood.<br><br></div><div class="fr">&emsp;&emsp; « Ah ! C’est vous, Dantès ! » Crie l’homme dans le petit bateau. « Qu’est-ce qui est arrivé ? Et pourquoi il y a cette atmosphère de tristesse à bord ? »<br><br></div><div class="en">&emsp;&emsp; "Ah! It's you, Dantès! The man in the small boat yells . " What happened ? And why is there this atmosphere of sadness on board ? "<br><br></div><div class="fr">&emsp;&emsp; « Un grand malheur, monsieur Morrel ! » Répond le jeune homme, « un grand malheur pour moi en particulier : nous avons perdu le capitaine Leclère. »<br><br></div><div class="en">&emsp;&emsp; “A great misfortune , Mr. Morrel! »Replies the young man,« a great misfortune for me in particular: we have lost Captain Leclère. "<br><br></div><div class="fr">&emsp;&emsp; « Et les marchandises ? » Demande rapidement l’entrepreneur.<br><br></div><div class="en">&emsp;&emsp; "And the goods? The entrepreneur asks quickly.<br><br></div><div class="fr">&emsp;&emsp; « Elles sont bien arrivées, monsieur Morrel, et je pense que vous serez content concernant ce point ; mais le pauvre capitaine Leclère… »<br><br></div><div class="en">&emsp;&emsp; “They arrived well, Mr. Morrel, and I think that you will be happy concerning this point; but poor Captain Leclère… ”<br><br></div><div class="fr">&emsp;&emsp; « Qu’est-ce qui lui est arrivé ? » Demande l’entrepreneur soulagé; « Qu’est-ce qui lui est arrivé à ce brave capitaine ? »<br><br></div><div class="en">&emsp;&emsp; " What happened to him ? "Asks the relieved entrepreneur ; "What happened to that brave captain? "<br><br></div><div class="fr">&emsp;&emsp; « Il est mort. »<br><br></div><div class="en">&emsp;&emsp; " He is dead. "<br><br></div><div class="fr">&emsp;&emsp; « Tombé à la mer ? »<br><br></div><div class="en">&emsp;&emsp; "Fallen into the sea ? "<br><br></div><div class="fr">&emsp;&emsp; « Non, monsieur ; mort d’une fièvre cérébrale, dans d’horribles souffrances. »<br><br></div><div class="en">&emsp;&emsp; " No sir ; died of a brain fever, in terrible pain. "<br><br></div><div class="fr">Puis Dantès se tourne vers l’équipe du bateau :<br><br></div><div class="en">Then Dantès turns to the boat crew:<br><br></div><div class="fr">&emsp;&emsp; « Hé ! préparez-vous pour l’arrivée ! »<br><br></div><div class="en">&emsp;&emsp; " Hey ! prepare for the arrival! "<br><br></div><div class="fr">Ils obéissent. Au même instant, les huit ou dix marins qui composent l’équipe commencent à exécuter les ordres. Après avoir contrôlé l’exécution de chaque manœuvre, il revient vers son interlocuteur.<br><br></div><div class="en">They obey . At the same time, the eight or ten sailors who make up the team begin to carry out orders. After having checked the execution of each maneuver, he returns to his interlocutor.<br><br></div><div class="fr">&emsp;&emsp; « Et comment ce malheur est-il arrivé ? » dit l’entrepreneur, pour reprendre la conversation.<br><br></div><div class="en">&emsp;&emsp; "And how did this misfortune happen? The entrepreneur said, resuming the conversation.<br><br></div><div class="fr">&emsp;&emsp; « Mon dieu, monsieur, de la manière la plus inattendue: après une longue conversation avec le commandant du port, le capitaine Leclère a quitté Naples très agité ; 24 heures après, la fièvre a commencé ; trois jours après, il est mort. Nous avons organisé les funérailles ordinaires pour lui. Nous rapportons à sa femme sa médaille d’honneur et son épée. C’est fou », continue le jeune homme avec un sourire triste, « le capitaine a fait dix ans la guerre contre les anglais et il a survécu, puis il est mort comme tout le monde, dans son lit. »<br><br></div><div class="en">&emsp;&emsp; “My god, sir, in the most unexpected way : after a long conversation with the port commander, Captain Leclère left Naples very agitated; 24 hours later, the fever started; three days later, he died. We organized the regular funeral for him. We bring back his medal of honor and his sword to his wife.  It's crazy, "continues the young man with a sad smile," the captain fought ten years in the war against the English and he survived , then he died like everyone else, in his bed. "<br><br></div><div class="fr">&emsp;&emsp; « Ah ! c’est la vie Monsieur Edmond », répond l’entrepreneur qui semble de plus en plus rassuré, « nous sommes tous mortels, les anciens donnent de la place pour les plus jeunes, sans ça, il n’y a pas d’évolution ; et si vous me dites que les marchandises sont livrées… »<br><br></div><div class="en">&emsp;&emsp; "Ah! it's life Mr. Edmond ", answers the entrepreneur who seems more and more reassured," we are all mortal, the old ones give place for the youngest, without that, there is no evolution ; and if you tell me that the goods are delivered ... "<br><br></div><div class="fr">&emsp;&emsp; « Livrées en bonnes conditions, monsieur Morrel, je vous le promets. C’est un voyage qui vous gagnera 25 000 francs de bénéfice. »<br><br></div><div class="en">&emsp;&emsp; “Delivered in good condition, Mr. Morrel, I promise you. This is a trip that will earn you 25,000 francs in profit. "<br><br></div><div class="fr">Puis, en voyant qu’on arrive au port, Dantès dit :<br><br></div><div class="en">Then, seeing that we arrived at the port, Dantès said:<br><br></div><div class="fr">&emsp;&emsp; « Arrangez les équipements, préparez-vous ! »<br><br></div><div class="en">&emsp;&emsp; "Arrange the equipment, get ready!" "<br><br></div><div class="fr">L’ordre s’exécute avec la même rapidité que sur un bateau de guerre.<br><br></div><div class="en">The order is carried out with the same speed as on a warship.<br><br></div><div class="fr">Après son dernier commandement, il dit :<br><br></div><div class="en">After his last command, he said:<br><br></div><div class="fr">&emsp;&emsp; « Et maintenant, si vous voulez monter, monsieur Morrel » dit Dantès en voyant l’impatience de l’entrepreneur, « car voilà le comptable, M. Danglars, il sort de sa cabine, et il va vous donner toutes les informations que vous désirez. Moi, je dois retourner au travail. »<br><br></div><div class="en">&emsp;&emsp; "And now, if you want to go upstairs, Monsieur Morrel" said Dantès, seeing the impatience of the entrepreneur, "because here  is the accountant , M. Danglars, he leaves his cabin, and he goes give you all the information you want. I have to go back to work. "<br><br></div><div class="fr">Dantès lui envoie une corde, avec une dextérité qui honore les hommes de la mer. L’entrepreneur pressé, la saisit et monte pour arriver sur le bateau. Dantès retourne à son poste et laisse la conversation à Danglars qui avance vers l’entrepreneur.<br><br></div><div class="en">Dantès sends him a rope, with a dexterity  that honors the men of the sea. The entrepreneur in a hurry, seizes it  and climbs to the boat. Dantès returns to his post and leaves  the conversation to Danglars who advances towards the entrepreneur.<br><br></div><div class="fr">Le nouvel homme a vingt-cinq ans. Il a une figure relativement sombre, c’est un bon serviteur pour ses supérieurs, insolent pour ses subordonnés. En plus, son statut de comptable est toujours une cause de répulsion pour les marins. Ils le détestent avec la même force qu’ils aiment, au contraire, Dantès.<br><br></div><div class="en">The new man is twenty-five. He has a relatively dark face, he is a good servant to his superiors, insolent to his subordinates. In addition, his status as an accountant is still a cause of repulsion for sailors. They hate him with the same force that they love, on the contrary, Dantès.<br><br></div><div class="fr">&emsp;&emsp; « Eh bien, monsieur Morrel » dit Danglars, « vous savez le malheur, n’est-ce pas ? »<br><br></div><div class="en">&emsp;&emsp; "Well, Mr. Morrel" said Danglars, "you know the misfortune, don't you? "<br><br></div><div class="fr">&emsp;&emsp; « Oui, oui, pauvre capitaine Leclère ! C’était un homme brave et honnête ! »<br><br></div><div class="en">&emsp;&emsp; "Yes, yes, poor Captain Leclère!" He was a brave and honest man! "<br><br></div><div class="fr">&emsp;&emsp; « Et surtout un excellent marin, il a vécu entre le ciel et l’eau pour servir votre belle entreprise » répond Danglars.<br><br></div><div class="en">&emsp;&emsp; "And above all  an excellent sailor, he lived between the sky and the water to serve your great business" answers Danglars.<br><br></div><div class="fr">&emsp;&emsp; « Mais » dit l’entrepreneur en regardant Dantès qui travaille, « mais il me semble qu’il n’est pas nécessaire d’être un très vieux marin pour connaître ce travail, Danglars. Car je vois notre ami Edmond Dantès qui fait son travail comme un homme qui n’a besoin de demander des conseils à personne. »<br><br></div><div class="en">&emsp;&emsp; "But," said the entrepreneur, looking at Dantès who was working, "but it seems to me that you don't have to be a very old sailor to know this job, Danglars. Because I see our friend Edmond Dantès who does his job like a man who does not need to seek advice  from anyone. "<br><br></div><div class="fr">&emsp;&emsp; « Oui » dit Danglars en jetant un regard illuminé de haine sur Dantès, « oui, il est jeune, et il ne doute de rien. Immédiatement après la mort du capitaine, il a pris le commandement sans consulter personne. Et, il nous a fait perdre un jour et demi à l’île d’Elbe au lieu de revenir directement à Marseille. »<br><br></div><div class="en">&emsp;&emsp; "Yes" said Danglars, casting a glance  illuminated with hatred  on Dantès, "yes, he is young, and he has no doubts. Immediately after the captain's death, he took command without consulting anyone. And, he lost us a day and a half on Elba Island  instead of  returning directly to Marseille. "<br><br></div><div class="fr">&emsp;&emsp; « Concernant prendre le commandement du bateau » dit l’entrepreneur, « il a bien fait, c’est son devoir car il est le second dans la hiérarchie ; Concernant perdre un jour et demi à l’île d’Elbe, il a eu tort; à moins que le bateau ait eu besoin de réparations ? »<br><br></div><div class="en">&emsp;&emsp; "Regarding taking command of the boat" said the contractor, "he did well, it is his duty because he is second in the hierarchy; Regarding losing a day and a half on the island of Elba, he was wrong ; unless the boat needed repairs? "<br><br></div><div class="fr">&emsp;&emsp; « Le bateau était en bon état, aussi bien que moi, et aussi bien que je désire que votre état soit bon, monsieur Morrel. Et cette journée et demie a été perdue par pur caprice, pour le plaisir d’aller à terre, c’est tout. »<br><br></div><div class="en">&emsp;&emsp; "The boat was in good condition, as well as I , and as good as I want your condition to be good, Mr. Morrel. And this day and a half was lost out of pure whim, for the pleasure of going ashore , that's all. "<br><br></div><div class="fr">&emsp;&emsp; « Dantès » dit l’entrepreneur en se tournant vers lui, « venez ici. »<br><br></div><div class="en">&emsp;&emsp; "Dantes" said the entrepreneur, turning to him, "come here. "<br><br></div><div class="fr">&emsp;&emsp; « Pardon, monsieur » dit Dantès, « je suis à vous dans un instant. »<br><br></div><div class="en">&emsp;&emsp; "Pardon me, sir" said Dantès, "I am yours in a moment. "<br><br></div><div class="fr">Puis, il s’adresse à l’équipe :<br><br></div><div class="en">Then he turns to the team:<br><br></div><div class="fr">&emsp;&emsp; « Immobilisez le bateau » dit-il.<br><br></div><div class="en">&emsp;&emsp; "Stop the boat," he said.<br><br></div><div class="fr">Alors, l’ancre tombe, et la chaine avec le bruit. Dantès reste à son poste, même s’il y a la présence du pilote, jusqu’à ce que cette dernière manœuvre soit terminée.<br><br></div><div class="en">Then, the anchor  falls, and the chain with the noise. Dantès remained at his post, even if the pilot was present, until this last maneuver was completed.<br><br></div><div class="fr">&emsp;&emsp; « Vous voyez » dit Danglars, « il croit déjà qu’il est capitaine ! rah ! »<br><br></div><div class="en">&emsp;&emsp; "You see," said Danglars, "he already thinks he's a captain!" rah! "<br><br></div><div class="fr">&emsp;&emsp; « Et il l’est ! » dit l’entrepreneur.<br><br></div><div class="en">&emsp;&emsp; "And he is! Said the entrepreneur.<br><br></div><div class="fr">&emsp;&emsp; « Oui, s’il a votre signature et celle de votre associé, monsieur Morrel. »<br><br></div><div class="en">&emsp;&emsp; "Yes, if it has your signature and that of your partner, Mr. Morrel. "<br><br></div><div class="fr">&emsp;&emsp; « Bien sûr ! pourquoi ne pas lui donner ce poste ? » dit l’entrepreneur. « Il est jeune, je le sais bien, mais il semble investi, et très expérimenté. »<br><br></div><div class="en">&emsp;&emsp; " Sure ! why not give him this job? Said the entrepreneur. “He's young, I know that, but he seems invested, and very experienced. "<br><br></div><div class="fr">Un nuage passe sur le visage de Danglars.<br><br></div><div class="en">A cloud passes over Danglars' face.<br><br></div><div class="fr">&emsp;&emsp; « Pardon, monsieur Morrel » dit Dantès en s’approchant, « maintenant que le bateau est immobilisé, je suis tout à vous : vous m’avez appelé, je crois ? »<br><br></div><div class="en">&emsp;&emsp; "Pardon me, Monsieur Morrel" said Dantès, approaching, "now that the boat is immobilized, I am all yours: you called me, I believe? "<br><br></div><div class="fr">Danglars fait un pas en arrière.<br><br></div><div class="en">Danglars takes a step  back.<br><br></div><div class="fr">&emsp;&emsp; « Je veux vous demander pourquoi vous vous êtes arrêtés à l’île d’Elbe ? »<br><br></div><div class="en">&emsp;&emsp; "I want to ask you why you stopped at Elba Island? "<br><br></div><div class="fr">&emsp;&emsp; « Je l’ignore, monsieur ; c’était pour accomplir un dernier ordre du capitaine Leclère, qui, en mourant, m’a donné un paquet pour le grand Maréchal Bertrand. »<br><br></div><div class="en">&emsp;&emsp; "I don't know, sir; it was to carry out a final order from Captain Leclère, who, when he died, gave me a package for Grand Marshal Bertrand. "<br><br></div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function() {
+
+
+        // Progress Bar - calculate amount scrolled and update bar
+        function amountscrolled(){
+            var winheight = $(window).height()
+            var docheight = $(document).height()
+            var scrollTop = $(window).scrollTop()
+            var trackLength = docheight - winheight
+            var pctScrolled = scrollTop/trackLength * 100 // gets percentage scrolled (ie: 80 NaN if tracklength == 0)
+
+            $('.progress-bar__progress').width(pctScrolled + '%');
+            console.log(pctScrolled + '% scrolled')
+        }
+        $(window).on("scroll", function(){
+            amountscrolled()
+        })
+
+            
+    });
+
+ 
+
+
+
+    // Workaround for choppy slide - Slide Up/down all of the blocks first
+    $(".en").slideDown(0,function(){
+                $(this).css({display: "block"});
+        });
+    $(".en").slideUp(0);
+
+    $('.en').addClass('fadeOut');
+    $(".fr").click(function(){
+        // Get the next english div 
+        var en_part = $(this).next('.en');
+        // console.log(en_part);
+        
+
+        if (en_part.css('display')=="none"){
+            en_part.slideDown({start: function () {
+                $(this).removeClass('fadeOut');
+                $(this).addClass('fadeIn');
+            }}
+            ,function(){
+                $(this).css({display: "block"});
+                
+                console.log('change');
+            });
+            
+        }
+        
+        else{
+            en_part.slideUp(
+                {
+                    start: function () {
+                    $(this).addClass('fadeOut');
+                    $(this).removeClass('fadeIn');
+                }
+            });
+        }
+        
+    })
+
+    // Set up plyr.io
+    const player = new Plyr('#player', {
+        controls:['play-large', 'play', 'progress', 'current-time', 'captions', 'settings', 'pip', 'airplay', 'fullscreen']
+    });
+
+
+    
+</script>
+<!-- <script>
+    var scrolled_past_title = false;
+    $(window).on('scroll', function() {
+        var scroll_top = $(this).scrollTop();
+        
+        // console.log( $(this).scrollTop() );
+        if (scroll_top > 370 && !scrolled_past_title){
+            // $('.navigation').addClass('move-up');
+            // $('.navigation').removeClass('move-down');
+
+            $(".title" ).animate({opacity: 0}, 500,function(){
+                $(this).attr('style','display:none !important');
+                $(".navigation_booktitle" ).animate({opacity: 1}, 500);
+            });
+
+            // $(".title").fadeOut("slow",function(){
+            //     // When the title fades out
+            //     $(this).attr('style','display:none !important');
+            //     $(".navigation_booktitle" ).fadeTo( "slow" , 1);
+
+            // })
+
+            // $(".title").fadeOut("slow", function () {
+            //     $(this).attr('style','display:none !important');
+            //     $( ".navigation_booktitle" ).fadeTo( "slow" , 1, function() {
+            //         // Animation complete.
+            //     });
+            // });
+            scrolled_past_title=true;
+        }
+        else if (scroll_top <=370 && scrolled_past_title){
+            $(".navigation_booktitle" ).animate({opacity: 0}, 500,function(){
+                $(".title").attr('style','display:flex !important');
+                $(".title" ).animate({opacity: 1}, 500);
+                scrolled_past_title = false;
+            });
+
+            
+            // $(".navigation_booktitle").fadeOut("slow",function(){
+            //     $( ".title" ).fadeTo( "slow" , 1);
+            // })
+        }
+        // else if (scroll_top <370){
+        //     $( ".navigation_booktitle" ).fadeTo( "slow" , 0, function() {
+        //             // Animation complete.
+        //                 $(".title").fadeIn("slow", function () {
+        //             $(this).attr('style','display:flex !important');
+        //         });
+        //         });
+
+        //     // $(".title").fadeIn("slow", function () {
+        //     //     $(this).attr('style','display:flex !important');
+        //     // });
+        //     // $(".navigation_booktitle").fadeOut("slow", function () {
+        //     //     $(this).attr('style','display:none !important');
+        //     // });
+            
+        //     // $('.navigation').addClass('move-down');
+        //     // $('.navigation').removeClass('move-up');
+            
+        // }
+    });
+</script> -->
+</html>
