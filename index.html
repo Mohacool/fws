@@ -212,6 +212,24 @@
     }
 
 
+    .skip_forward, .skip_back{
+        position:absolute;
+        opacity:0.3;
+        transition: all .3s ease-out;
+    }
+    .skip_forward:hover, .skip_back:hover{
+        opacity:0.7;
+        cursor:pointer;
+    }
+
+    .skip_forward{
+        margin-right:90px;
+    }
+    .skip_back{
+        
+        margin-left:84px;
+    }
+
     /* Audio Player */
     .plyr__progress input{
         color:#2c94d0 !important;
@@ -223,7 +241,7 @@
     .plyr__controls__item.plyr__progress__container{
         position: absolute;
         top: 0;
-        margin-top: -14px;
+        margin-top: -12px;
         left: 0px;
         padding-left: 0;
         width: 100vw;
@@ -234,11 +252,16 @@
     }
     .plyr__controls__item.plyr__control[data-plyr="play"]{
         background:transparent !important;
-        color:#4a5464 !important;
+        /* color:#4a5464 !important; */
+        color:black !important;
         margin:0 auto;
     }
     .plyr.plyr--full-ui{
         width:100vw;
+    }
+    .icon--pressed, .icon--not-pressed{
+        width:25px !important;
+        height:25px !important;
     }
     
 
@@ -292,11 +315,8 @@
         <audio id="player" controls>
             <source src="chapter1.mp3" type="audio/mp3" />
         </audio>
-        <div class="skip_container d-flex position-absolute">
-            <img src="https://img.icons8.com/ios-glyphs/30/000000/replay-10.png"/>
-            <img style="opacity:0;" src="https://img.icons8.com/ios-glyphs/30/000000/replay-10.png"/>
-            <img src="https://img.icons8.com/ios-glyphs/30/000000/forward-10.png"/>
-        </div>
+        <img class="skip_forward" height="30px" src="https://img.icons8.com/ios/100/000000/replay-10.png"/>
+        <img class="skip_back" height="30px" src="https://img.icons8.com/ios/100/000000/forward-10.png"/>
     </div>
    
     <div class="container">
