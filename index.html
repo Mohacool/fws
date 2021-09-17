@@ -101,6 +101,13 @@
 
         /* Fix odd line showing at the bottom */
         transform: translateY(1px);
+
+
+        transition: transform .5s ease,opacity 0s linear,background .5s,color .5s,fill .5s,stroke .5s,visibility 0s linear 0s;
+        transition-property: transform, opacity, background, color, fill, stroke, visibility;
+        transition-duration: .7s, 0s, 0.5s, 0.5s, 0.5s, 0.5s, 0s;
+        transition-timing-function: ease, linear, ease, ease, ease, ease, linear;
+        transition-delay: 0s, 0s, 0s, 0s, 0s, 0s, 0s;
     }
     .audioplayer_hide{
         transform:translateY(140%);
@@ -304,7 +311,9 @@
     }
     .plyr__progress__buffer{
         background:white !important;
+        color:white !important;
     }
+    
     
 
     
@@ -346,14 +355,8 @@
         </div>
         
     </div>
-    <!-- Simple -->
-    <div class="audio_player d-none">
-        <audio id="player-id" controls>
-            <source src="chapter1.mp3" type="audio/mp3" />
-          </audio>
-    </div>
     <!-- Attempt -->
-    <div class="audio_player">
+    <div class="audio_player audioplayer_hide">
         <audio id="player" controls>
             <source src="chapter1.mp3" type="audio/mp3" />
         </audio>
@@ -372,6 +375,7 @@
 </body>
 <script>
     $(document).ready(function() {
+        var audiobar_shown = false;
 
 
         // Progress Bar - calculate amount scrolled and update bar
@@ -383,7 +387,19 @@
             var pctScrolled = scrollTop/trackLength * 100 // gets percentage scrolled (ie: 80 NaN if tracklength == 0)
 
             $('.progress-bar__progress').width(pctScrolled + '%');
-            console.log(pctScrolled + '% scrolled')
+
+            // console.log(pctScrolled + '% scrolled')
+            //console.log(scrollTop);
+
+            // Find the scroll height of the story title
+            var title_end_height= parseInt($(".container").css('margin-top'),10) + $(".booktitle").outerHeight();
+
+            // If scroll past title, the audiobar is hidden and its not already been shown show it
+            if ( (scrollTop > title_end_height) && $(".audio_player").hasClass("audioplayer_hide") && !audiobar_shown){
+                $(".audio_player").removeClass("audioplayer_hide");
+                $(".audio_player").addClass("audioplayer_show");
+                audiobar_shown = true;
+            }
         }
         $(window).on("scroll", function(){
             amountscrolled()
