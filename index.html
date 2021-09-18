@@ -313,6 +313,9 @@
         background:white !important;
         color:white !important;
     }
+    .plyr__controls__item.plyr__progress__container:hover{
+        cursor:pointer;
+    }
     
     
 
@@ -375,7 +378,6 @@
 </body>
 <script>
     $(document).ready(function() {
-        var audiobar_shown = false;
 
 
         // Progress Bar - calculate amount scrolled and update bar
@@ -395,10 +397,9 @@
             var title_end_height= parseInt($(".container").css('margin-top'),10) + $(".booktitle").outerHeight();
 
             // If scroll past title, the audiobar is hidden and its not already been shown show it
-            if ( (scrollTop > title_end_height) && $(".audio_player").hasClass("audioplayer_hide") && !audiobar_shown){
+            if ( (scrollTop > title_end_height) && $(".audio_player").hasClass("audioplayer_hide")){
                 $(".audio_player").removeClass("audioplayer_hide");
                 $(".audio_player").addClass("audioplayer_show");
-                audiobar_shown = true;
             }
         }
         $(window).on("scroll", function(){
