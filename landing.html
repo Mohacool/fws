@@ -23,7 +23,7 @@
     .title{
         /* Font style taken from style.css */
         font-size:70px;
-        padding-top:60px;
+        padding-top:40px;
         text-align: center;
     }
     .subtitle{
@@ -35,22 +35,27 @@
     }
     .book{
         height:40vh;
+        object-fit: contain;
+        margin-top: auto;
+        margin-bottom: 50px;
     }
     .books_row{
-        position:absolute;
-        bottom:60px;
-        left:50%;
-        transform:translateX(-50%);
-        margin:0;
+        
+    }
+    .container-fluid{
+        border:10px solid #4CA8DD;
+        height:100vh;
+        display:flex;
+        flex-direction: column;
     }
 </style>
 <body>
     <div class="container-fluid">
         <h1 class="title">French <br>With <br>Stories</h1>
         <!-- <h4 class="subtitle pt-4">Learn French with<br><span>Book Name</span></h4> -->
-        <div class="row books_row d-flex justify-content-center">
-            <img class="book" src="montecristo.jpg" alt="">
-        </div>
+        <h4 class="text-center">Learn French With <u>Classics</u></h4>
+        <img class="book" src="montecristo.jpg" alt="">
+        
         
     </div>
 </body>
