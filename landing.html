@@ -67,7 +67,7 @@
     <div class="container-fluid">
         <h1 class="title">French <br>With <br>Stories</h1>
         <!-- <h4 class="subtitle pt-4">Learn French with<br><span>Book Name</span></h4> -->
-        <h4 class="text-center subtitle">Learn French With <u>Classics</u></h4>
+        <h4 class="text-center subtitle">Learn French With <u class="book_title">Classics</u></h4>
         <!-- <img class="book" src="montecristo.jpg" alt=""> -->
 
         <!-- Slider main container -->
@@ -127,6 +127,26 @@
         scrollbar: {
             el: '.swiper-scrollbar',
         },
+    });
+    swiper.on('transitionEnd', function() {
+        let slide_num = swiper.realIndex;
+        let book_title = "";
+        if (slide_num==0){
+            book_title = "Le Comte de Monte Cristo";
+        }
+        else if (slide_num==1){
+            book_title="Candide";
+        }
+        else if (slide_num==2){
+            book_title="Les Trois Musqueteers";
+        }
+        else if (slide_num==3){
+            book_title="Les Miserables";
+        }
+        else if (slide_num==4){
+            book_title="Arsene Lupin";
+        }
+        $(".book_title").text(book_title);
     });
 </script>
 </html>
